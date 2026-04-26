@@ -494,6 +494,72 @@ NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server
 const contactForm = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
 
+// ✅ Backend URL (Render)
+const API_URL = "https://aairav-backend.onrender.com";
+
+contactForm.addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const formData = {
+    name: contactForm.name.value,
+    email: contactForm.email.value,
+    phone: contactForm.phone.value,
+    message: contactForm.message.value
+  };
+
+  try {
+    const res = await fetch(`${API_URL}/send-email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      formStatus.classList.remove('d-none', 'text-danger');
+      formStatus.classList.add('text-success');
+      formStatus.textContent = "Message sent successfully!";
+      contactForm.reset();
+    } else {
+      formStatus.classList.remove('d-none');
+      formStatus.classList.add('text-danger');
+      formStatus.textContent = data.error || "Failed to send message";
+    }
+  } catch (err) {
+    formStatus.classList.remove('d-none');
+    formStatus.classList.add('text-danger');
+    formStatus.textContent = "Server error. Try again later.";
+  }
+});
+
+// ✅ Product modal (unchanged logic)
+const productModal = document.getElementById('productModal');
+
+productModal.addEventListener('show.bs.modal', function (event) {
+  const button = event.relatedTarget;
+
+  const title = button.getAttribute('data-title');
+  const img = button.getAttribute('data-img');
+  const desc = button.getAttribute('data-desc');
+
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalImg').src = img;
+  document.getElementById('modalDesc').textContent = desc;
+});
+
+// ✅ Fetch products from backend
+fetch(`${API_URL}/api/products`)
+  .then(res => res.json())
+  .then(data => console.log(data));
+</script>
+
+<!-- <script> -->
+<!-- const contactForm = document.getElementById('contactForm');
+const formStatus = document.getElementById('formStatus');
+
 contactForm.addEventListener('submit', async function (e) {
   e.preventDefault();
 
@@ -549,8 +615,13 @@ productModal.addEventListener('show.bs.modal', function (event) {
   document.getElementById('modalImg').src = img;
   document.getElementById('modalDesc').textContent = desc;
 });
-</script>    
+</script>   
 
+<script>
+fetch("https://aairav-backend.onrender.com/api/products")
+  .then(res => res.json())
+  .then(data => console.log(data));
+</script> -->
 <!-- Google Analytics (GA4) - replace MEASUREMENT_ID with your ID to enable tracking -->
 <!--
 <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
