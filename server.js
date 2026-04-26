@@ -11,6 +11,28 @@ require('dotenv').config();
 
 const app = express();
 
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+// ✅ Root route (fix)
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
+
+// Example API
+app.get("/api/products", (req, res) => {
+  res.json([{ name: "Quartz Pebbles" }]);
+});
+
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Server running");
+});
+
 // Middleware
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
