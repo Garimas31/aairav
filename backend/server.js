@@ -1,200 +1,98 @@
-// // /*<!-- -------------------------------------------------- -->
-// // <!-- SERVER: server.js (optional Node.js backend to send email) -->
-// // <!-- Save as server.js and run with `node server.js` after installing dependencies -->*/
-
-
-const express = require("express");
-const nodemailer = require("nodemailer");
-const cors = require("cors");
 require("dotenv").config();
 
+const express = require("express");
+const cors = require("cors");
+const { Resend } = require("resend");
+
 const app = express();
+const PORT = process.env.PORT || 5000;
 
-const mailOptions = {
-  from: "Aairav Minerals <onboarding@resend.dev>",
-  to: "aairavminerals@gmail.com",
-  replyTo: email,
-  subject: `Quotation Enquiry: ${name}`,
-  text: message
-};
-
-// Middleware
-app.use(cors());
 app.use(express.json());
 
-// ✅ Root route (fix for "Cannot GET /")
+app.use(
+  cors({
+    origin: [
+      "https://aairav.vercel.app/",
+      "http://localhost:5500",
+      "http://127.0.0.1:5500"
+    ]
+  })
+);
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 app.get("/", (req, res) => {
-  res.send("Backend is running 🚀");
+  res.send("Aairav Minerals backend is running");
 });
 
-// ✅ Products API
-app.get("/api/products", (req, res) => {
-  res.json([{ name: "Quartz Pebbles" }]);
-});
-
-// ✅ Email route
 app.post("/send-email", async (req, res) => {
-  const { name, email, phone, message } = req.body;
-
-  if (!email || !message) {
-    return res.status(400).json({ error: "Missing fields" });
-  }
-
   try {
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT) || 587,
-      secure: false,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
+    const {
+      name,
+      email,
+      phone,
+      product,
+      quantity,
+      unit,
+      requirements,
+      message
+    } = req.body;
+
+    if (!name || !email) {
+      return res.status(400).json({
+        success: false,
+        message: "Name and email are required."
+      });
+    }
+
+    if (!process.env.RESEND_API_KEY || !process.env.TO_EMAIL) {
+      return res.status(500).json({
+        success: false,
+        message: "Email service is not configured."
+      });
+    }
+
+    const { data, error } = await resend.emails.send({
+      from: "Aairav Minerals <onboarding@resend.dev>",
+      to: [process.env.TO_EMAIL],
+      replyTo: email,
+      subject: `Quotation Enquiry: ${name}`,
+      text: `
+New quotation enquiry from Aairav Minerals website
+
+Name: ${name}
+Email: ${email}
+Phone: ${phone || "Not provided"}
+Product: ${product || "Not specified"}
+Quantity: ${quantity || "Not specified"}
+Unit: ${unit || "Not specified"}
+Requirements: ${requirements || "Not specified"}
+Message: ${message || "Not provided"}
+      `
     });
 
-    const mailOptions = {
-      from: `${name} <${email}>`,
-      to: process.env.TO_EMAIL,
-      subject: `Website Contact: ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`,
-    };
+    if (error) {
+      console.error("Resend error:", error);
+      return res.status(502).json({
+        success: false,
+        message: "Unable to send email."
+      });
+    }
 
-    await transporter.sendMail(mailOptions);
-
-    res.json({ ok: true });
+    return res.status(200).json({
+      success: true,
+      message: "Quotation enquiry submitted successfully.",
+      id: data.id
+    });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to send email" });
+    console.error("Email server error:", err);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while submitting your enquiry."
+    });
   }
 });
 
-// ✅ Start server (ONLY ONCE)
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-// const express = require('express');
-// const nodemailer = require('nodemailer');
-// const bodyParser = require('body-parser');
-// const cors = require('cors');
-// require('dotenv').config();
-
-// const app = express();
-
-// const express = require("express");
-// const cors = require("cors");
-
-// const app = express();
-
-// app.use(cors());
-// app.use(express.json());
-
-// // ✅ Root route (fix)
-// app.get("/", (req, res) => {
-//   res.send("Backend is running 🚀");
-// });
-
-// // Example API
-// app.get("/api/products", (req, res) => {
-//   res.json([{ name: "Quartz Pebbles" }]);
-// });
-
-// app.listen(process.env.PORT || 3000, () => {
-//   console.log("Server running");
-// });
-
-// // Middleware
-// app.use(cors());
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
-
-// // Route
-// app.post('/send-email', async (req, res) => {
-//   const { name, email, phone, message } = req.body;
-
-//   if (!email || !message) {
-//     return res.status(400).json({ error: 'Missing fields' });
-//   }
-
-//   try {
-//     const transporter = nodemailer.createTransport({
-//       host: process.env.SMTP_HOST,
-//       port: Number(process.env.SMTP_PORT) || 587,
-//       secure: false,
-//       auth: {
-//         user: process.env.SMTP_USER,
-//         pass: process.env.SMTP_PASS,
-//       },
-//     });
-
-//     const mailOptions = {
-//       from: `${name} <${email}>`,
-//       to: process.env.TO_EMAIL,
-//       subject: `Website Contact: ${name}`,
-//       text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`,
-//     };
-
-//     await transporter.sendMail(mailOptions);
-
-//     res.json({ ok: true });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: 'Failed to send email' });
-//   }
-// });
-
-// // Start server
-// const PORT = process.env.PORT || 3000;
-// app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
-
-// console.log(process.env.SMTP_HOST);
-// console.log("ENV CHECK:", process.env.SMTP_HOST);
-
-// // old
-// // const express = require('express');
-// // const nodemailer = require('nodemailer');
-// // const bodyParser = require('body-parser');
-// // const action = "http://localhost:3000/send-email";
-// // require('dotenv').config();
-
-// // const app = express();
-// // app.use(bodyParser.urlencoded({ extended: true }));
-// // app.use(bodyParser.json());
-
-// // app.post('/send-email', async (req, res) => {
-// //   const { name, email, phone, message } = req.body;
-// //   if (!email || !message) return res.status(400).json({ error: 'Missing fields' });
-
-// //   try {
-// //     const transporter = nodemailer.createTransport({
-// //       host: process.env.SMTP_HOST,
-// //       // port: Number(process.env.SMTP_PORT) || 587,
-// //       secure: false, // true for 465
-// //       auth: {
-// //         user: process.env.SMTP_USER,
-// //         pass: process.env.SMTP_PASS,
-// //       },
-// //     });
-
-// //     const mailOptions = {
-// //       from: `${name} <${email}>`,
-// //       to: process.env.TO_EMAIL,
-// //       subject: `Website Contact: ${name}`,
-// //       text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`,
-// //     };
-
-// //     await transporter.sendMail(mailOptions);
-// //     res.json({ ok: true });
-// //   } catch (err) {
-// //     console.error(err);
-// //     res.status(500).json({ error: 'Failed to send email' });
-// //   }
-// // });
-
-// // const PORT = process.env.PORT || 3000;
-// // app.listen(PORT, () => console.log('Server running on', PORT));
-
-// // // .env file should contain: SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, TO_EMAIL
-
-
-
