@@ -8,13 +8,6 @@ What this file contains:
 - Contact section with address + contact form that POSTs to Formspree (no backend required)
 - Optional Node.js server example (below) to send email using Nodemailer if you want your own backend
 - Simple visitor counter using CountAPI (free public API) to show total hits on the homepage
-
-How to use:
-1. Open this file in a code editor and replace placeholder texts (company name, products, images, address).
-2. Replace the Formspree action URL with your Formspree form endpoint (or hook to your own backend).
-3. Replace GA_MEASUREMENT_ID with your Google Analytics 4 measurement ID to enable analytics.
-4. Optionally deploy to Netlify / Vercel / GitHub Pages (for static) or a small Node host (for backend email).
-
 NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server.js --" section for a sample backend.
 -->
 
@@ -37,109 +30,332 @@ NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server
   font-family: 'Inter', sans-serif;
   background-color: #f8fafc;
   padding-top: 80px;
-}
+  }
 
+  /* .hero {
+    height: 50vh;
+    background: 
+      linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+      url('pebble2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  } */
+   
 .hero {
-  height: 50vh;
-  background: 
-    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-    url('pebble2.jpg');
+  min-height: 400px;
+  padding: 90px 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(10, 25, 47, 0.88),
+      rgba(10, 25, 47, 0.48)
+    ),
+    url("pebble2.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-.me-2{
-  border-radius: 50%;
+.hero-content {
+  max-width: 800px;
 }
 
-.custom-navbar {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  padding: 10px 0;
+.hero-label {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
 
-.navbar-brand {
-  font-size: 1.3rem;
-  letter-spacing: 0.5px;
+.hero h1 {
+  line-height: 1.15;
+  text-wrap: balance;
 }
 
-.nav-link {
-  color: #333 !important;
-  font-weight: 500;
-  transition: all 0.3s ease;
+.hero-highlight {
+  color: #bfdbfe;
 }
 
-.nav-link:hover {
-  color: #0d6efd !important;
+.hero p {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.8;
 }
 
-.btn-dark {
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-.card {
-  border-radius: 12px;
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-.product-img {
-  height: 220px;
-  object-fit: cover;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
-
-.btn-primary {
-  background-color: #0d6efd;
-  border: none;
+.hero .btn {
   border-radius: 8px;
 }
 
-.btn-outline-dark {
-  border-radius: 8px;
+@media (max-width: 576px) {
+  .hero {
+    min-height: 460px;
+    padding: 65px 0;
+  }
+
+  .hero h1 {
+    font-size: 2.25rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
 }
 
-#about img {
-  max-height: 500px;
-  object-fit: cover;
-}
 
-#about h2 {
-  font-size: 2rem;
-}
+  .me-2{
+    border-radius: 50%;
+  }
 
-#modalDesc {
-  white-space: pre-line;
-}
+  .custom-navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 10px 0;
+  }
 
-.footer-section {
-  background: linear-gradient(135deg, #1f2937, #111827);
-}
+  .navbar-brand {
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+  }
 
-.footer-link {
-  color: #d1d5db;
-  text-decoration: none;
-  transition: 0.3s;
-}
+  .nav-link {
+    color: #333 !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
 
-.footer-link:hover {
-  color: #ffffff;
-}
+  .nav-link:hover {
+    color: #0d6efd !important;
+  }
 
-.footer-section hr {
-  opacity: 0.2;
-}
+  .btn-dark {
+    border-radius: 8px;
+    font-size: 14px;
+  }
+
+  .card {
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  }
+
+  .product-img {
+    height: 220px;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+
+  .btn-primary {
+    background-color: #0d6efd;
+    border: none;
+    border-radius: 8px;
+  }
+
+  .btn-outline-dark {
+    border-radius: 8px;
+  }
+
+  #about img {
+    max-height: 500px;
+    object-fit: cover;
+  }
+
+  #about h2 {
+    font-size: 2rem;
+  }
+
+  #modalDesc {
+    white-space: pre-line;
+  }
+
+  .footer-section {
+    background: linear-gradient(135deg, #1f2937, #111827);
+  }
+
+  .footer-link {
+    color: #d1d5db;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  .footer-link:hover {
+    color: #ffffff;
+  }
+
+  .footer-section hr {
+    opacity: 0.2;
+  }
+  /* ===== NEW ANIMATIONS ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.6s ease;
+  }
+  .fade-in.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== PRODUCT CARD UPGRADE ===== */
+  .card {
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  }
+
+  /* ===== SLIDER MODAL ===== */
+  .slider-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 9999;
+    overflow-y: auto;
+  }
+
+  .slider-content {
+    max-width: 600px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .slider-wrapper {
+    overflow: hidden;
+  }
+
+  .slides {
+    display: flex;
+    transition: transform 0.4s ease;
+  }
+
+  .slide {
+    min-width: 100%;
+  }
+
+  .slide img {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  /* arrows */
+  .arrow {
+    cursor: pointer;
+    font-size: 25px;
+    padding: 10px;
+  }
+
+  /* close */
+  .close-btn {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+  }
+  .slider-wrapper {
+      overflow: hidden;
+      width: 100%;
+      height: 300px;
+    }
+
+  .slides {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.4s ease;
+    }
+
+  .slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .slider-wrapper {
+      height: 220px;
+    }
+  }
+  
+  /* Floating WhatsApp Button */
+  .whatsapp-float {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 1040;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 18px;
+    background: #25D366;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 50px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.18);
+    transition: transform 0.2s ease;
+  }
+
+  .whatsapp-float:hover {
+    color: #fff;
+    transform: translateY(-3px);
+  }
+
+  .whatsapp-icon {
+    font-size: 23px;
+    line-height: 1;
+  }
+
+  @media (max-width: 576px) {
+    .whatsapp-float {
+      right: 14px;
+      bottom: 14px;
+      padding: 12px;
+    }
+  }
+  
+  .company-highlights {
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .company-highlights h2 {
+    color: #172554;
+    font-weight: 700;
+  }
+
 </style>
 </head>
-
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light fixed-top custom-navbar">
@@ -148,7 +364,7 @@ NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server
     <a class="navbar-brand d-flex align-items-center fw-bold" href="#">
      <img src="Aairav Minerals logo design.png" 
            alt="logo" width="32" class="me-2">
-      Aairav Minerals
+      Aairav Mineral
     </a>
     <!-- Toggle -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -175,8 +391,42 @@ NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server
     </div>
   </nav>
 
-  <header class="hero d-flex align-items-center text-white">
-  <div class="container text-center">
+  <!-- <header class="hero d-flex align-items-center text-white"> -->
+    
+<header class="hero d-flex align-items-center text-white">
+  <div class="container">
+    <div class="hero-content text-center mx-auto">
+
+      <span class="hero-label">
+        Aairav Mineral
+      </span>
+
+      <h1 class="display-4 fw-bold mt-3">
+        Quality Minerals.
+        <span class="hero-highlight">Reliable Supply.</span>
+      </h1>
+
+      <p class="lead mt-4 mb-4">
+        Explore our mineral products for industrial and
+        decorative applications. Contact our team to discuss
+        product availability and your requirements.
+      </p>
+
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        <a href="#products" class="btn btn-primary btn-lg px-4">
+          Explore Products
+        </a>
+
+        <a href="#contact" class="btn btn-outline-light btn-lg px-4">
+          Request a Quote
+        </a>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+  <!-- <div class="container text-center">
     <h1 class="display-5 fw-bold">
       Premium Mineral Solutions for Industrial & Decorative Needs
     </h1>
@@ -185,8 +435,8 @@ NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server
     </p>
     <a class="btn btn-primary me-2 px-4" href="#products">View Products</a>
     <a class="btn btn-outline-light px-4" href="#contact">Contact Us</a>
-  </div>
-</header>
+  </div> -->
+<!-- </header> -->
 
 <main class="py-5">
   <div class="container">
@@ -208,7 +458,26 @@ NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server
               </p>
 
               <div class="mt-auto d-flex justify-content-between align-items-center">
-                <button class="btn btn-sm btn-outline-dark"
+                
+                    <button
+                      class="btn btn-sm btn-outline-dark"
+                      data-bs-toggle="modal"
+                      data-bs-target="#productModal"
+                      data-title="White Quartz Pebbles"
+                      data-desc="High-quality white quartz pebbles with a smooth finish. Suitable for gardens, pathways, aquariums, and interior décor. Available in multiple sizes."
+                      data-images="pebble1.jpg,pebble-factory.jpeg,pebble2.jpg,pebblee.jpg,decor.jpeg,factory.jpeg">
+                      View
+                    </button>
+
+                <!-- <button class="btn btn-sm btn-outline-dark"
+                  data-bs-toggle="modal"
+                  data-bs-target="#productModal"
+                  data-title="White Quartz Pebbles"
+                  data-desc="High-quality white quartz pebbles with smooth finish and long-lasting shine. Suitable for gardens, pathways, aquariums, and interior décor. Available in multiple sizes (10mm–50mm). Packaging: 25kg bags & bulk orders."
+                  data-images="pebble1.jpg,pebble2.jpg,pebbleee.jpg">
+                  View
+                </button> -->
+                <!-- <button class="btn btn-sm btn-outline-dark"
                   data-bs-toggle="modal"
                   data-bs-target="#productModal"
                   data-title="White Quartz Pebbles"
@@ -217,8 +486,7 @@ NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server
                   Available in multiple sizes (10mm–50mm). 
                   Packaging: 25kg bags & bulk orders.">
                   View
-                </button>
-        
+                </button> -->
               </div>
             </div>
           </div>
@@ -243,7 +511,7 @@ NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server
 
         <p class="text-muted">
           Aairav Minerals is a trusted supplier of high-quality mineral products, 
-          specializing in quartz, silica sand, and decorative stones. We focus on 
+          specializing in quartz and decorative stones. We focus on 
           delivering consistent purity, durability, and reliability to meet industrial 
           and decorative needs across India.
         </p>
@@ -256,11 +524,11 @@ NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server
         <!-- Highlights -->
         <div class="row mt-4">
           <div class="col-6 mb-3">
-            <h5 class="fw-bold text-primary">10+ Years</h5>
+            <h5 class="fw-bold text-primary">11+ Years</h5>
             <small class="text-muted">Industry Experience</small>
           </div>
           <div class="col-6 mb-3">
-            <h5 class="fw-bold text-primary">50+ Tons</h5>
+            <h5 class="fw-bold text-primary">1000+ Tons</h5>
             <small class="text-muted">Annual Capacity</small>
           </div>
           <div class="col-6">
@@ -291,7 +559,7 @@ NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server
           </p>
           <div class="mb-3">
             <strong>📍 Address</strong>
-            <p class="text-muted mb-1">Sangwara, Rajasthan, India</p>
+            <p class="text-muted mb-1">Sagwara, Rajasthan, India</p>
           </div>
           <div class="mb-3">
             <strong>📞 Phone</strong>
@@ -357,9 +625,30 @@ NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server
 
   </div>
 </main>
-
 <!-- Product modal -->
-<div class="modal fade" id="productModal" tabindex="-1">
+ <div class="modal fade" id="productModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content p-3 position-relative">
+
+      <!-- CLOSE -->
+      <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal"></button>
+
+      <h5 id="modalTitle" class="fw-bold mb-3 text-center"></h5>
+
+      <!-- SLIDER -->
+      <div class="slider-wrapper">
+        <div class="slides" id="slides"></div>
+      </div>
+
+      <!-- ARROWS -->
+      <div class="d-flex justify-content-between mt-3">
+        <button class="btn btn-outline-dark" onclick="prevSlide()">&lt;</button>
+        <button class="btn btn-outline-dark" onclick="nextSlide()">&gt;</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="modal fade" id="productModal" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body p-0">
@@ -376,7 +665,55 @@ NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+<!-- Floating WhatsApp Enquiry Button -->
+<a
+  href="https://wa.me/919834596336?text=Hello%20Aairav%20Minerals%2C%20I%20would%20like%20to%20enquire%20about%20your%20products."
+  class="whatsapp-float"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Enquire with Aairav Minerals on WhatsApp"
+>
+  <span class="whatsapp-icon">✆</span>
+  <span>WhatsApp Enquiry</span>
+</a>
+
+<section class="company-highlights py-4">
+  <div class="container">
+    <div class="row g-3 text-center">
+
+      <div class="col-6 col-lg-3">
+        <h2 class="h6 mb-1">Product Range</h2>
+        <p class="small text-muted mb-0">
+          Explore Available Minerals
+        </p>
+      </div>
+
+      <div class="col-6 col-lg-3">
+        <h2 class="h6 mb-1">Quality Information</h2>
+        <p class="small text-muted mb-0">
+          Product Specifications
+        </p>
+      </div>
+
+      <div class="col-6 col-lg-3">
+        <h2 class="h6 mb-1">Bulk Enquiries</h2>
+        <p class="small text-muted mb-0">
+          Discuss Your Requirements
+        </p>
+      </div>
+
+      <div class="col-6 col-lg-3">
+        <h2 class="h6 mb-1">Direct Contact</h2>
+        <p class="small text-muted mb-0">
+          Email and WhatsApp
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <footer class="footer-section text-white pt-5 pb-3">
   <div class="container">
@@ -404,7 +741,7 @@ NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server
       <!-- Contact -->
       <div class="col-md-4 mb-4">
         <h6 class="fw-bold">Contact</h6>
-        <p class="mb-1">📍 Sangwara, Rajasthan, India</p>
+        <p class="mb-1">📍 Sagwara, Rajasthan, India</p>
         <p class="mb-1">📧 aairavminerals@gmail.com</p>
         <p class="mb-0">📞 +91-9834596336</p>
       </div>
@@ -419,7 +756,7 @@ NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server
         “Built on trust. Driven by quality. Delivering excellence in every stone.”
       </em>
     </div>
-
+</div>
     <!-- Bottom -->
     <div class="text-center">
       <small class="text-light">
@@ -433,62 +770,6 @@ NOTE: This is a standalone HTML demo. Scroll down to find the "-- SERVER: server
 <!-- Bootstrap JS + Popper (CDN) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- old <script> -->
-  <!-- // Fill year
-  //document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-  // Product modal fill
-  const productModal = document.getElementById('productModal');
-  productModal.addEventListener('show.bs.modal', function (event) {
-    const button = event.relatedTarget;
-    const title = button.getAttribute('data-title');
-    const img = button.getAttribute('data-img');
-    const desc = button.getAttribute('data-desc');
-
-    //document.getElementById('modalTitle').textContent = title;
-  //  document.getElementById('modalImg').src = img;
-   // document.getElementById('modalDesc').textContent = desc;
- // });
-  // Contact form: show success message when Formspree returns success
-  // const contactForm = document.getElementById('contactForm');
-  //const formStatus = document.getElementById('formStatus');
-
-  //contactForm.addEventListener('submit', async function (e) { -->
-    <!-- // If you're using Formspree's normal form action, this block is optional. This prevents redirecting page.
-    //e.preventDefault();
-    //const formData = new FormData(contactForm);
-    //const action = contactForm.action;
-    //try {
-    //  const res = await fetch(action, {
-    //    method: 'POST',
-    //    body: formData,
-    //    headers: { 'Accept': 'application/json' }
-    //  });
-    //  if (res.ok) {
-     //   formStatus.classList.remove('d-none');
-      //  contactForm.reset();
-    //  } else {
-      //  const data = await res.json();
-      //  alert(data.error || 'There was a problem sending the message.');
-    //  }
-   // } catch (err) {
-     // alert('Network error. Please try again later.');
-    //}
-  //});  
-  // Visitor counter using CountAPI (https://countapi.xyz) - replace namespace/key to your own if desired
-  async function updateVisitCount() {
-    try {
-      const namespace = 'everrock-example'; // change to a unique namespace
-      const key = 'homepage';
-      const res = await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
-      const data = await res.json();
-      document.getElementById('visitCount').textContent = data.value;
-    } catch (err) {
-      document.getElementById('visitCount').textContent = '—';
-    }
-  }
-  updateVisitCount();
-</script>-->
 
 <script>
 const contactForm = document.getElementById('contactForm');
@@ -535,119 +816,107 @@ contactForm.addEventListener('submit', async function (e) {
   }
 });
 
-// ✅ Product modal (unchanged logic)
-const productModal = document.getElementById('productModal');
 
-productModal.addEventListener('show.bs.modal', function (event) {
-  const button = event.relatedTarget;
 
-  const title = button.getAttribute('data-title');
-  const img = button.getAttribute('data-img');
-  const desc = button.getAttribute('data-desc');
+/* ===== PRODUCT MODAL SLIDER ===== */
 
-  document.getElementById('modalTitle').textContent = title;
-  document.getElementById('modalImg').src = img;
-  document.getElementById('modalDesc').textContent = desc;
+var currentSlide = 0;
+var totalSlides = 0;
+
+const productModal = document.getElementById("productModal");
+const slidesContainer = document.getElementById("slides");
+
+productModal.addEventListener("show.bs.modal", function (event) {
+    const button = event.relatedTarget;
+    if (!button) return;
+
+    const title = button.getAttribute("data-title") || "Product";
+    const imageData = button.getAttribute("data-images") || "";
+
+    document.getElementById("modalTitle").textContent = title;
+    slidesContainer.innerHTML = "";
+
+    const images = imageData
+        .split(",")
+        .map(path => path.trim())
+        .filter(Boolean);
+
+    images.forEach(path => {
+        const slide = document.createElement("div");
+        slide.className = "slide";
+
+        const img = document.createElement("img");
+        img.src = path;
+        img.alt = title;
+
+        img.onerror = function () {
+            console.error("Image failed to load:", path);
+            slide.textContent = "Unable to load image: " + path;
+        };
+
+        slide.appendChild(img);
+        slidesContainer.appendChild(slide);
+    });
+
+    currentSlide = 0;
+    totalSlides = images.length;
+    updateSlide();
 });
+
+function updateSlide() {
+    slidesContainer.style.transform =
+        `translateX(-${currentSlide * 100}%)`;
+}
+
+function nextSlide() {
+    if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlide();
+    }
+}
+
+function prevSlide() {
+    if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+    }
+}
+
 
 // ✅ Fetch products from backend
 fetch(`${API_URL}/api/products`)
   .then(res => res.json())
   .then(data => console.log(data));
-</script>
-
-<!-- <script> -->
-<!-- const contactForm = document.getElementById('contactForm');
-const formStatus = document.getElementById('formStatus');
-
-contactForm.addEventListener('submit', async function (e) {
-  e.preventDefault();
-
-  // Create JSON object
-  const formData = {
-    name: contactForm.name.value,
-    email: contactForm.email.value,
-    phone: contactForm.phone.value,
-    message: contactForm.message.value
-  };
-
-  try {
-    const res = await fetch("http://localhost:3000/send-email", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'   
-      },
-      body: JSON.stringify(formData)         
-    });
-
-    const data = await res.json();
-
-
-    if (res.ok) {
-      formStatus.classList.remove('d-none');
-      formStatus.classList.remove('text-danger');
-      formStatus.classList.add('text-success');
-      formStatus.textContent = "Message sent successfully!";
-      contactForm.reset();
-    } else {
-      formStatus.classList.remove('d-none');
-      formStatus.classList.add('text-danger');
-      formStatus.textContent = data.error || "Failed to send message";
+  
+// ===== SCROLL ANIMATION =====
+const elements = document.querySelectorAll('.fade-in');
+window.addEventListener('scroll', () => {
+  elements.forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight - 50) {
+      el.classList.add('show');
     }
-  } catch (err) {
-    formStatus.classList.remove('d-none');
-    formStatus.classList.add('text-danger');
-    formStatus.textContent = "Server error. Try again later.";
-  }
+  });
+});
+
+/* ===== MOBILE SWIPE SUPPORT ===== */
+let startX = 0;
+
+productModal.addEventListener("touchstart", function (e) {
+    startX = e.touches[0].clientX;
+});
+
+productModal.addEventListener("touchend", function (e) {
+    const endX = e.changedTouches[0].clientX;
+
+    if (startX - endX > 50) {
+        nextSlide();
+    } else if (endX - startX > 50) {
+        prevSlide();
+    }
 });
 
 
-const productModal = document.getElementById('productModal');
-
-productModal.addEventListener('show.bs.modal', function (event) {
-  const button = event.relatedTarget;
-
-  const title = button.getAttribute('data-title');
-  const img = button.getAttribute('data-img');
-  const desc = button.getAttribute('data-desc');
-
-  document.getElementById('modalTitle').textContent = title;
-  document.getElementById('modalImg').src = img;
-  document.getElementById('modalDesc').textContent = desc;
-});
-</script>   
-
-<script>
-fetch("https://aairav-backend.onrender.com/api/products")
-  .then(res => res.json())
-  .then(data => console.log(data));
-</script> -->
-<!-- Google Analytics (GA4) - replace MEASUREMENT_ID with your ID to enable tracking -->
-<!--
-<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);} gtag('js', new Date());
-  gtag('config', 'GA_MEASUREMENT_ID');
 </script>
--->
 
 </body>
 </html>
-
-
-
-<!-- -------------------------------------------------- -->
-<!-- README notes -->
-<!--
-Deployment suggestions:
-- If you keep site static (no backend), deploy index.html to GitHub Pages / Netlify / Vercel.
-- For email with your own SMTP, host the Node backend on Render / Railway / Heroku and point the form to /send-email.
-- For analytics: signup for Google Analytics 4, copy your MEASUREMENT_ID into GA_MEASUREMENT_ID.
-- For visitor counter: CountAPI is used in the demo; create your namespace to avoid collisions.
-
-Security & production notes:
-- Never put SMTP credentials in frontend code. Use server-side env vars.
-- Use HTTPS in production.
-- Validate and sanitize form inputs on the server.
--->
