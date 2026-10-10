@@ -10,6 +10,14 @@ require("dotenv").config();
 
 const app = express();
 
+const mailOptions = {
+  from: "Aairav Minerals <onboarding@resend.dev>",
+  to: "aairavminerals@gmail.com",
+  replyTo: email,
+  subject: `Quotation Enquiry: ${name}`,
+  text: message
+};
+
 // Middleware
 app.use(cors());
 app.use(express.json());
