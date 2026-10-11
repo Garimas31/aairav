@@ -93,10 +93,6 @@ app.post("/send-email", async (req, res) => {
 Name: ${name}
 Email: ${email}
 Phone: ${phone || "Not provided"}
-Product: ${product || "Not specified"}
-Quantity: ${quantity || "Not specified"}
-Unit: ${unit || "Not specified"}
-Requirements: ${requirements || "Not specified"}
 Message: ${message || "Not provided"}
   `
 });
