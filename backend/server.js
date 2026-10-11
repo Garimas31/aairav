@@ -9,6 +9,8 @@ const PORT = process.env.PORT || 5000;
 
 // CORS configuration
 const allowedOrigins = [
+  "https://aairavmineral.com",
+  "https://www.aairavmineral.com",
   "https://aairav-p5abfx64s-garima-sharmas-projects.vercel.app",
   "https://aairav.vercel.app",
   "http://localhost:5500",
@@ -83,13 +85,11 @@ app.post("/send-email", async (req, res) => {
     }
 
     const { data, error } = await resend.emails.send({
-      from: "Aairav Minerals <onboarding@resend.dev>",
-      to: [process.env.TO_EMAIL],
-      replyTo: email,
-      subject: `Quotation Enquiry: ${name}`,
-      text: `
-New quotation enquiry from Aairav Minerals website
-
+  from: "Aairav Minerals <enquiries@aairavmineral.com>",
+  to: [process.env.TO_EMAIL],
+  replyTo: email,
+  subject: `Quotation Enquiry: ${name}`,
+  text: `
 Name: ${name}
 Email: ${email}
 Phone: ${phone || "Not provided"}
@@ -98,8 +98,8 @@ Quantity: ${quantity || "Not specified"}
 Unit: ${unit || "Not specified"}
 Requirements: ${requirements || "Not specified"}
 Message: ${message || "Not provided"}
-      `
-    });
+  `
+});
 
     if (error) {
       console.error("Resend error:", error);
